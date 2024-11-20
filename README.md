@@ -9,3 +9,6 @@
 4) Можем проверять отправлять запросы через POSTMAN.
 
 5) Можно запустить test.py вместо постмена, это проверит работоспособность gateway, rabbitmq и send.
+
+Весть проект:
+https://docs.google.com/document/d/1wTd1yBbGNlQqCBXM-Z2ftYkNtxiSp5PELhL2fGo2318/edit?usp=sharing
