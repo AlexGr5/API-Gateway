@@ -142,6 +142,55 @@ def delete_message(data: dict):
     {
          "user_id": user_id
     }
+
+Выходные данные:
+    {
+        'user_id': user_id,
+        'status': 'success',
+        'cart':
+        {
+            'id': id,
+            'user_id': user_id,
+            'totalPrice': totalPrice,
+            'dishes':
+            [
+            {
+                'id': id,
+                'name': name,
+                'category': category,
+                'size': size,
+                'price': price,
+                'finalPrice': finalPrice,
+                'sauce': sauce,
+                'products':
+                [
+                {
+                    'id': id,
+                    'name': name,
+                    'price': price
+                },
+                …
+                ],
+                'added_products':
+                [
+                …
+                ],
+                'removed_products':
+                [
+                …
+                ]
+            },
+            …
+            ]
+        }
+    }
+
+или
+    {
+        'user_id': user_id,
+        'status': 'error',
+        'error': 'Cart not found'
+    }
 '''
 @app.get("/cart")
 def get_cart(data: dict):
@@ -176,6 +225,26 @@ def get_cart(data: dict):
 '''
     {
          "user_id": user_id
+    }
+
+Выходные данные:
+    {
+        'user_id': user_id,
+        'status': 'success',
+        'cart':
+        {
+            'id': id,
+            'user_id': user_id,
+            'totalPrice': totalPrice,
+            'dishes':[ ]
+        }
+    }
+
+Или
+    {
+        'user_id': user_id,
+        'status': 'error',
+        'error': 'Cart not found'
     }
 '''
 @app.delete("/cart")
@@ -212,6 +281,43 @@ def clear_cart(data: dict):
         "dish_id": dish_id
     }
 '''
+'''
+Выходные данные:
+    {
+        'user_id': user_id,
+        'dish_id': dish_id,
+        'status': 'success',
+        ‘dish’:
+        {
+            ‘id’: id,
+            ‘name’: name,
+            ‘category’: category,
+            ‘size’: size,
+            ‘price’: price,
+            ‘finalPrice’: finalPrice,
+            ‘sauce’: sauce,
+            ‘products’:
+            [
+                {
+                    ‘id’: id,
+                    ‘name’: name,
+                    ‘price’: price
+                },
+            …
+            ],
+            ‘added_products’: […],
+            ‘removed_products’: […]
+        },
+    }
+
+или
+    {
+        'user_id': user_id,
+        'dish_id': dish_id,
+        'status': 'error',
+        'error': error
+    }
+'''
 @app.get("/cart/dish")
 def get_dish_in_cart(data: dict):
     try:
@@ -244,6 +350,18 @@ def get_dish_in_cart(data: dict):
     "user_id": user_id,
     "dish": { JSON блюда }
     }    
+'''
+'''
+Выходные данные:
+    {
+        'user_id': user_id,
+        'status': 'success',
+        'dish':
+            {
+                'id': id,
+                …
+            }
+    }
 '''
 @app.post("/cart/dish")
 def add_dish_in_cart(data: dict):
@@ -279,6 +397,25 @@ def add_dish_in_cart(data: dict):
         "dish_id": dish_id,
         "dish": {JSON Блюда}
     }
+
+Выходные данные:
+    {
+        'user_id': user_id,
+        'status': 'success',
+        'dish':
+        {
+            'id': id,
+            …
+        }
+    }
+
+или
+    {
+        'user_id': user_id,
+        'dish_id': dish_id,
+        'status': 'error',
+        'error': error
+    }
 '''
 @app.put("/cart/dish")
 def update_dish_in_cart(data: dict):
@@ -313,6 +450,14 @@ def update_dish_in_cart(data: dict):
     {
         "user_id": user_id,
         "dish_id": dish_id
+    }
+
+Выходные данные:
+    {
+        'user_id': user_id,
+        'dish_id': dish_id,
+        'status': status,
+        'message': message
     }
 '''
 @app.delete("/cart/dish")
@@ -351,13 +496,39 @@ def remove_dish_in_cart(data: dict):
 # Сделать заказ
 # Input:
 """
-{
-    'client_id': client_id,
-    'rest_id': restaurant_id,
-    'comment': 'Комментарий к заказу',
-    'delivery_type': delivery_type,
-    'delivery_address': 'г. Новосибирск, ул. Ленина, д. 65, кв. 45'
-}
+    {
+        'client_id': client_id,
+        'rest_id': restaurant_id,
+        'comment': 'Комментарий к заказу',
+        'delivery_type': delivery_type,
+        'delivery_address': 'г. Новосибирск, ул. Ленина, д. 65, кв. 45'
+    }
+
+Выходные данные:
+    {
+        'order':
+        {
+            'id': order_id,
+            'client_id': client_id,
+            'rest_id': rest_id,
+            'cour_id': 'cour_id',
+            'created_at': created_at_timestamp,
+            'estim_time': estim_time,
+            'status': status,
+            'payment_status': payment_status,
+            'delivery_type': delivery_type,
+            'delivery_address': 'г. Новосибирск, ул. Ленина, д. 65, кв. 45',
+            'cart': {…}
+        }
+    }
+
+Или
+    {
+        'id': correlation_id,
+        'action': 'create_response',
+        'status': 'error',
+        'error': 'Error description'
+    }
 """
 @app.post("/order")
 def create_order(data: dict):
@@ -396,6 +567,32 @@ def create_order(data: dict):
     {
          'order_id': order_id
     }
+
+Выходные данные:
+    {
+        'order':
+        {
+            'id': order_id,
+            'client_id': client_id,
+            'rest_id': rest_id,
+            'cour_id': 'cour_id',
+            'created_at': created_at_timestamp,
+            'estim_time': estim_time,
+            'status': status,
+            'payment_status': payment_status,
+            'delivery_type': delivery_type,
+            'delivery_address': 'г. Новосибирск, ул. Ленина, д. 65, кв. 45',
+            'cart': {…}
+        }
+    }
+
+Или
+    {
+        'id': correlation_id,
+        'action': 'order_response',
+        'status': 'error',
+        'error': 'Error description'
+    }
 '''
 @app.get("/order/order")
 def get_order(data: dict):
@@ -432,6 +629,18 @@ def get_order(data: dict):
 '''
     {
          'order_id': order_id
+    }
+
+Выходные данные:
+    {
+        'order_id': order_id,
+        'status': status,
+        'payment_status': payment_status
+    }
+
+Или
+    {
+        'order_id': order_id
     }
 '''
 @app.get("/order/status")
